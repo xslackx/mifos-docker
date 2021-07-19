@@ -1,4 +1,4 @@
-FROM tomcat:9-jre8-alpine
+FROM tomcat:8.5-jre8-alpine
 
 RUN apk add --no-cache mysql-client
 
