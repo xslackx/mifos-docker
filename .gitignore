@@ -4,7 +4,7 @@
 .project
 .certs
 mifosx.zip
-dbdata/
+data/
 appwar/
 confs/
 .DS_STORE

@@ -1,4 +1,5 @@
 services:
+# Web Engine Apache Tomcat With Mifos Application
   mifosx:
     build:
       context: ./mifos
@@ -13,6 +14,7 @@ services:
       mifos-db-server:
         condition: service_healthy
       
+# Database Server 
   mifos-db-server:
     build:
       context: ./mysql
@@ -32,6 +34,7 @@ services:
     networks:
       - mifos-network
 
+# Board Administration of Mysql
   mifos_phpmyadmin:
     links:
       - mifos-db-server
@@ -47,16 +50,19 @@ services:
     networks:
       - mifos-network
 
+# CIDR Range Prefix for network stack
 networks:
   mifos-network:
     ipam:
       driver: default
       config:
         - subnet: "172.16.130.0/29"
+
+# Mapping External Volumes
 volumes:
   dbdata:
     driver: local
     driver_opts:
       type: none
-      device: /home/rits/freelancer/mifos-docker-master/data
+      device: /home/rits/mifos-docker/data
       o: bind

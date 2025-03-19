@@ -20,7 +20,7 @@ $ docker-compose up --build
 username: mifos
 password: password
 
-https://localhost:8443/community-app/#/ (secure web access, but this is a self signed certificate and you will have a warning in your web explorer, just ignore it and continue)
+https://localhost:8443/ (secure web access, but this is a self signed certificate and you will have a warning in your web explorer, just ignore it and continue)
 
 # Removing the volume (Only in Dev)
 3. As note if you have any issue with the volumes and entry points remove the volumes (be careful, with this we are removing all of them, because it is running in our local DEV, don't do this in PRODUCTION)
@@ -31,12 +31,20 @@ $ docker rm $(docker ps -a -q)
 $ docker volume rm $(docker volume ls -q)
 ```
 
-# MUST
-- Create .env files
-- Create .certs directory
-- Create appwar, confs, dbdata directory
+# MUST create .env files with secrets
+- Create .env, .env_mifos, .env_sql file
+- .env_mifos keys: USERNAME="", PASSWORD=""
+- .env_sql keys: MYSQL_ROOT="", MYSQL_ROOT_PASSWORD=""
 
 # External Volumes 
+
+Change the default location that will be persist the database data,
+locate in line 67 of file docker-compose.yml in key device:
+
+# External Ports Exposed
+- Port 8095 service phpmyadmin
+- Port 3307 service mysql
+- Port 8443 service mifos
 
 Reference 
 
