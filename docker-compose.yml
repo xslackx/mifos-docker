@@ -1,6 +1,4 @@
-version: '3'
 services:
-  #Mifos app service
   mifosx:
     build:
       context: ./mifos
@@ -14,7 +12,7 @@ services:
     depends_on:
       mifos-db-server:
         condition: service_healthy
-  #Mysql db service      
+      
   mifos-db-server:
     build:
       context: ./mysql
@@ -23,17 +21,17 @@ services:
     restart: unless-stopped
     ports:
       - '3307:3306'
-    environment:
-      MYSQL_ROOT_PASSWORD: mysql
     healthcheck:
-      test: mysqladmin --user=root --password=mysql ping -h localhost
+      test: mysqladmin --user=$MYSQL_ROOT --password=$MYSQL_ROOT_PASSWORD ping -h localhost
       interval: 5s
       retries: 20
     volumes:
-      - dbdata:/var/lib/mysql    
+      - 'dbdata:/var/lib/mysql'
+    env_file:
+      - .env_sql
     networks:
       - mifos-network
-  #phpmyadmin service
+
   mifos_phpmyadmin:
     links:
       - mifos-db-server
@@ -47,14 +45,18 @@ services:
       PMA_HOST: mifos-db-server
       UPLOAD_LIMIT: 1000000000
     networks:
-      - mifos-network      
+      - mifos-network
 
-#Docker Networks
 networks:
   mifos-network:
-    driver: bridge
-
-#Volumes
+    ipam:
+      driver: default
+      config:
+        - subnet: "172.16.130.0/29"
 volumes:
   dbdata:
-    driver: local    
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/rits/freelancer/mifos-docker-master/data
+      o: bind

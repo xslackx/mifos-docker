@@ -1,0 +1,10 @@
+.git
+.env
+.env_mifos
+.project
+.certs
+mifosx.zip
+dbdata/
+appwar/
+confs/
+.DS_STORE

@@ -1,16 +1,20 @@
 # Mifos X 18.03.01 - Docker
 
+# Composing the environment
 1. Just run Docker compose to get Mifos X 18.03.01 up and running.
 
 ```bash
 $ docker-compose up
 ```
 
+# Rebuilding image modifications
     To build an image again after making changes
+
 ```bash
 $ docker-compose up --build
 ```
 
+# Default credentials 
 2. Login to Mifos using the Web UI with these credentials:
 
 username: mifos
@@ -18,13 +22,21 @@ password: password
 
 https://localhost:8443/community-app/#/ (secure web access, but this is a self signed certificate and you will have a warning in your web explorer, just ignore it and continue)
 
+# Removing the volume (Only in Dev)
+3. As note if you have any issue with the volumes and entry points remove the volumes (be careful, with this we are removing all of them, because it is running in our local DEV, don't do this in PRODUCTION)
 
-3. As note if you have any issue with the volumes and entry points remove the volumes (be careful, with this we are removing all of them, because it is running in our local DEV, don't do this in Production)
 ```bash
 $ docker stop $(docker ps -a -q)
 $ docker rm $(docker ps -a -q)
 $ docker volume rm $(docker volume ls -q)
 ```
+
+# MUST
+- Create .env files
+- Create .certs directory
+- Create appwar, confs, dbdata directory
+
+# External Volumes 
 
 Reference 
 

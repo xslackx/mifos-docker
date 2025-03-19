@@ -8,13 +8,10 @@ COPY ./fineract-provider.war /usr/local/tomcat/webapps/fineract-provider.war
 
 COPY ./community-app/ /usr/local/tomcat/webapps/community-app
 
-# RUN cd /usr/local/tomcat/webapps/
-
-# RUN mv ROOT OLDROOT && mv community-app ROOT
+RUN cd /usr/local/tomcat/webapps/ && \
+mv ROOT OLDROOT && mv community-app ROOT
 
 COPY ./api-docs /usr/local/tomcat/webapps/api-docs
-
-# ADD ./test/ /usr/local/tomcat/webapps/test/ 
 
 RUN cd /root && mkdir .mifosx
 
